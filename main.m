@@ -1,0 +1,74 @@
+clc
+clear
+close all
+
+%{
+
+The following code will alnalyze the mechanical system with respect to θ_2 
+
+Independant Variable: θ2
+Dependant VariableS: θ3, R3
+
+1. Displacement of point C
+2. angular velocities and accelerations of all links,
+3. Linear velocities and accelerations of point C,
+4. Polar plots ofthe forces at all joints and the shaking force,
+5. Shaking moment applied from the mechanism to the base
+
+%}
+
+%%%%%%%%%%%%%
+% Constants %
+%%%%%%%%%%%%%
+
+r1 = 4;
+r2 = 5;
+r_bc = 20; 
+r4 = 12;
+R = [r1, r2, r4]; % list containing known link lengths
+
+theta_1 = 0;
+theta_2 = 0:.1:360; % Theta two is a list of values from 0 to 360 degrees
+theta_4 = 90;
+
+theta_2_dot = 40;
+theta_2_ddot = 0;
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Solving Kinematically (Chp. 5) %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+link3_info = solve_kinematically(theta_2, R, theta_2_dot, theta_2_ddot);
+
+% Unpacking link3_info, a list containing [r3 , θ3, r3_dot, theta_3_dot, r3_ddot, theta_3_ddot]
+
+r3 = link3_info(1,:);
+theta_3 = link3_info(2,:);
+r3_dot = link3_info(3,:);
+theta_3_dot = link3_info(4,:);
+r3_ddot = link3_info(5,:);
+theta_3_ddot = link3_info(6,:);
+
+% θ2 vs θ3_dot
+plot(theta_2, theta_3_dot, '-b');
+title('Angle of Link 2 (θ2) vs. Angular Velocity of Link 3 (rad/s)');
+grid('on');
+xlabel('Angle of Link 2 (°)');
+ylabel('Angular Velocity of Link 3 (rad/s)');
+
+% θ2 vs θ3_ddot
+plot(theta_2, theta_3_ddot, '-m');
+title('Angle of Link 2 (θ2) vs. Angular Acceletation of Link 3 (rad/s^s)');
+grid('on');
+xlabel('Angle of Link 2 (°)');
+ylabel('Angular Acceletation of Link 3 (rad/s^s)');
+
+
+%%%%%%%%%%%%%%%%%%%%%
+%  Solving Point C  %
+%%%%%%%%%%%%%%%%%%%%%
+
+C_info = solve_C(r2, theta_2, theta_2_dot, theta_2_ddot, r_bc, link3_info);
+
+plot(theta_2, C_info(4,:));
+

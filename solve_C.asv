@@ -1,4 +1,4 @@
-function [C_info] = solve_C(r2, theta_2, theta_2_dot, theta_2_ddot, r_bc, link3_info)
+function [C_info, V_d_pts, A_d_pts] = solve_C(r2, theta_2, theta_2_dot, theta_2_ddot, r_bc, link3_info)
 
 %{
 
@@ -49,32 +49,69 @@ A = sqrt( Ax.^2 + Ay.^2 );
 
 % Calculating Direction for Velocity and Acceleration w.r.t x axis
 
-V_angle = 0 * ones(size(theta_2)); % Take obtuse angle
+V_angle = zeros(size(theta_2)); 
+A_angle = zeros(size(theta_2));
 
 % Adjust Direction for Positive East and Positive North
 Vx = -Vx;
-   
+Ax =  -Ax;
+
+% Discontinuity points - e.g going from 0 degrees to 360 degrees
+tol = 50; % identifier for discontinuity
+V_d_pts = []; 
+A_d_pts = [];
 
 for i = 1:length(theta_2)
+    
+    
+    % VELOCITY DIRECTION DETERMINATION LOGIC
    
-   if Vx(i) >= 0 && Vy(i) >= 0
-       V_angle(i) = asind( Vy(i) / V(i) );
+   if Vx(i) >= 0 && Vy(i) >= 0 % Q1
+       V_angle(i) = acosd( Vx(i) / V(i) );
        
-   elseif Vx(i) < 0 && Vy(i) >= 0
-       V_angle(i) = 180 - acosd( Vy(i) / V(i) );
+   elseif Vx(i) < 0 && Vy(i) >= 0 % Q2
+       V_angle(i) = acosd( Vx(i) / V(i) );
        
-    elseif Vx(i) >= 0 && Vy(i) < 0
+   elseif Vx(i) >= 0 && Vy(i) < 0 % Q4
        V_angle(i) = 360 - acosd( Vx(i) / V(i) );
        
-    else    
-       V_angle(i) = 180 - atand( Vy(i) / Vx(i) );
+   else  %Q3
+       V_angle(i) = 180 + acosd( Vx(i) / V(i) );
    end
-    
+   
+   % Check for discontinuity
+   if i > 1 && abs(V_angle(i) - V_angle(i-1)) > tol
+       V_d_pts(end+1) = i;
+       V_angle(i) = NaN;
+   end
+
+   
+   % ACCELERATION DIRECTION DETERMINATION LOGIC
+   
+   
+   if Ax(i) >= 0 && Ay(i) >= 0 %Q1
+       A_angle(i) = acosd( Ax(i) / A(i) );
+       
+   elseif Ax(i) < 0 && Ay(i) >= 0 %Q2
+       A_angle(i) = acosd( Ax(i) / A(i) );
+       
+    elseif Vx(i) >= 0 && Vy(i) <  %Q3
+       A_angle(i) = 360 - acosd( Ax(i) / A(i) );
+       
+    else    
+       A_angle(i) = 180 + acosd( Ax(i) / A(i) );
+   end
+   
+   
+   % Check for discontinuity
+   if i > 1 && abs(A_angle(i) - A_angle(i-1)) > tol
+       A_d_pts(end+1) = i;
+       A_angle(i) = NaN;
+   end
 
 end
-    
+     
+C_info = [R; R_angle; V; V_angle; A; A_angle;];
 
-    
-C_info = [R; R_angle; V; V_angle; A; V_angle;];
 end
 

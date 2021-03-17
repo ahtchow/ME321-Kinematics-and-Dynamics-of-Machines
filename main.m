@@ -122,7 +122,6 @@ title('Angle of Link 2 (θ2) vs. Direction of Velocity for Point C');
 grid('on');
 xlabel('Angle of Link 2 (°)');
 ylabel('Direction of Velocity for Point C (°)');
-plot(theta_2, C_info(4,:));
 for i = 1:length(v_d_pts)
     xline(v_d_pts(i),'--')
 end
@@ -131,7 +130,7 @@ ttl = sprintf('plots/plot_%d.png', image_num);
 exportgraphics(ax,ttl);
 image_num = image_num +1;
 
-% θ2 vs Direction of Acceleration of Point C
+% θ2 vs Acceleration of Point C
 plot(theta_2, C_info(5,:), '-b');
 title('Angle of Link 2 (θ2) vs. Acceleration of Point C (Rc)');
 grid('on');
@@ -142,7 +141,7 @@ ttl = sprintf('plots/plot_%d.png', image_num);
 exportgraphics(ax,ttl);
 image_num = image_num +1;
 
-% θ2 vs Direction of Direction of Acceleration
+% θ2 vs Direction of Acceleration for Point C
 plot(theta_2, C_info(6,:), '-m');
 title('Angle of Link 2 (θ2) vs. Direction of Acceleration for Point C');
 grid('on');

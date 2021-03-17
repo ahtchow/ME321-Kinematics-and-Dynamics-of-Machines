@@ -31,8 +31,21 @@ theta_3 = link3_info(2,:);
 theta_3_dot = link3_info(4,:);
 theta_3_ddot = link3_info(6,:);
 
+%%%%%%%%%%%%%%%%%%
+% Solving Link 2 %
+%%%%%%%%%%%%%%%%%%
 
-% Solving Link 2
+Ag2x = 
+Ag2y = 
+    
+M2Ag2x = m2 * Ag2x;
+M2Ag2y = m2 * Ag2y;
+Io2_theta_2_ddot = (Io2 * theta_2_ddot) * ones(size(theta_2)); % Make a vector making size theta_2
+
+
+%%%%%%%%%%%%%%%%%%
+% Solving Link 3 %
+%%%%%%%%%%%%%%%%%%
 
 Ag3x = (-r2 * theta_2_ddot * sind(theta_2)) + (-r2 * (theta_2_dot)^2 * cosd(theta_2)) ...
         + ( -b3 * theta_3_ddot .* sind(theta_3) ) + ( -b3 * (theta_3_dot).^2 .* cosd(theta_3));
@@ -40,9 +53,10 @@ Ag3x = (-r2 * theta_2_ddot * sind(theta_2)) + (-r2 * (theta_2_dot)^2 * cosd(thet
 Ag3y = (r2 * theta_2_ddot * cosd(theta_2)) + (-r2 * (theta_2_dot)^2 * sind(theta_2)) ...
         + ( b3 * theta_3_ddot .* cosd(theta_3) ) + ( -b3 * (theta_3_dot).^2 .* sind(theta_3));
     
-M2Ag3x = m2 * Ag3x;
-M2Ag3y = m2 * Ag3y;
-Io2_theta_2_ddot = Io2 * theta_2_ddot; 
+MbcAg3x = mbc * Ag3x;
+MbcAg3y = mbc * Ag3y;
+
+Ig3_theta_3_ddot = Ig3 * theta_3_ddot; 
 
 
 end

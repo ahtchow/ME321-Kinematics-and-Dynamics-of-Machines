@@ -6,7 +6,7 @@ The following function solve displacement, linear velocity and acceleration for 
 
 Input: theta_2 = [0 ... 2π], R = [r1, r2, r4] , theta_2_dot, theta_2_ddot, rbc
        link3_info = [r3, theta_3, r3_dot, theta_3_dot, r3_ddot, theta_3_ddot]
-Output: C_info = [c_displacement, c_velocity, c_acceleration]
+Output: C_info = [c_displacement, c_velocity, c_acceleration],
 
 See derivation...
 
@@ -74,13 +74,6 @@ for i = 1:length(theta_2)
 
    end
    
-   % Check for discontinuity
-   if i > 1 && abs(V_angle(i) - V_angle(i-1)) > tol
-       V_d_pts(end+1) = i;
-       V_angle(i) = NaN;
-   end
-
-   
    % ACCELERATION DIRECTION DETERMINATION LOGIC
    
    
@@ -94,6 +87,12 @@ for i = 1:length(theta_2)
    
    
    % Check for discontinuity
+   
+   if i > 1 && abs(V_angle(i) - V_angle(i-1)) > tol
+       V_d_pts(end+1) = i;
+       V_angle(i) = NaN;
+   end
+   
    if i > 1 && abs(A_angle(i) - A_angle(i-1)) > tol
        A_d_pts(end+1) = i;
        A_angle(i) = NaN;

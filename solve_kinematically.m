@@ -6,7 +6,8 @@ The following function will alnalyze the mechanical system kinematically
 with respect to θ2. 
 
 Input: theta_2 = [0 ... 2π], R = [r1, r2, r4] , Theta = [theta_1, theta_4], theta_2_dot, theta_2_ddot
-Output: link3_info = [r3, theta_3, r3_dot, theta_3_dot, r3_ddot, theta_3_ddot]
+Output: link3_info = [r3, theta_3, r3_dot, theta_3_dot, r3_ddot,
+theta_3_ddot]
 
 Independant Variable: θ_2
 Dependant VariableS: θ3, R_3

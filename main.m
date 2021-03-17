@@ -26,6 +26,7 @@ r2 = 5;
 r_bc = 20; 
 r4 = 12;
 R = [r1, r2, r4]; % list containing known link lengths
+image_num = 1; % ignore, this is the nameing convention for saved plots
 
 theta_1 = 0;
 theta_2 = 0:1:360; % Theta two is a list of values from 0 to 360 degrees
@@ -55,6 +56,10 @@ title('Angle of Link 2 (θ2) vs. Angular Velocity of Link 3 (rad/s)');
 grid('on');
 xlabel('Angle of Link 2 (°)');
 ylabel('Angular Velocity of Link 3 (rad/s)');
+ax = gca; % Save image
+ttl = sprintf('plots/plot_%d.png', image_num);
+exportgraphics(ax,ttl);
+image_num = image_num +1;
 
 % θ2 vs θ3_ddot
 plot(theta_2, theta_3_ddot, '-m');
@@ -62,7 +67,10 @@ title('Angle of Link 2 (θ2) vs. Angular Acceletation of Link 3 (rad/s^s)');
 grid('on');
 xlabel('Angle of Link 2 (°)');
 ylabel('Angular Acceletation of Link 3 (rad/s^s)');
-
+ax = gca; % Save image
+ttl = sprintf('plots/plot_%d.png', image_num);
+exportgraphics(ax,ttl);
+image_num = image_num +1;
 
 %%%%%%%%%%%%%%%%%%%%%
 %  Solving Point C  %
@@ -70,25 +78,41 @@ ylabel('Angular Acceletation of Link 3 (rad/s^s)');
 
 [C_info, v_d_pts, a_d_pts] = solve_C(r2, theta_2, theta_2_dot, theta_2_ddot, r_bc, link3_info);
 
-plot(theta_2, C_info(1,:));
+% θ2 vs Displacement of Point C
+plot(theta_2, C_info(1,:), '-b');
 title('Angle of Link 2 (θ2) vs. Displacement of Point C (Rc)');
 grid('on');
 xlabel('Angle of Link 2 (°)');
 ylabel('Displacement of Point C (cm)');
+ax = gca; % Save image
+ttl = sprintf('plots/plot_%d.png', image_num);
+exportgraphics(ax,ttl);
+image_num = image_num +1;
 
-plot(theta_2, C_info(2,:));
+% θ2 vs Direction Angle of Point C
+plot(theta_2, C_info(2,:), '-m');
 title('Angle of Link 2 (θ2) vs. Direction Angle of Point C (θc)');
 grid('on');
 xlabel('Angle of Link 2 (°)');
 ylabel('Displacement of Point C (°)');
+ax = gca; % Save image
+ttl = sprintf('plots/plot_%d.png', image_num);
+exportgraphics(ax,ttl);
+image_num = image_num +1;
 
-plot(theta_2, C_info(3,:));
+% θ2 vs Velocity of Point C
+plot(theta_2, C_info(3,:), '-b');
 title('Angle of Link 2 (θ2) vs. Velocity of Point C (Rc)');
 grid('on');
 xlabel('Angle of Link 2 (°)');
 ylabel('Velocity of Point C (cm/s)');
+ax = gca; % Save image
+ttl = sprintf('plots/plot_%d.png', image_num);
+exportgraphics(ax,ttl);
+image_num = image_num +1;
 
-plot(theta_2, C_info(4,:));
+% θ2 vs Direction of Velocity for Point C
+plot(theta_2, C_info(4,:), '-m');
 title('Angle of Link 2 (θ2) vs. Direction of Velocity for Point C');
 grid('on');
 xlabel('Angle of Link 2 (°)');
@@ -97,15 +121,24 @@ plot(theta_2, C_info(4,:));
 for i = 1:length(v_d_pts)
     xline(v_d_pts(i),'--')
 end
+ax = gca; % Save image
+ttl = sprintf('plots/plot_%d.png', image_num);
+exportgraphics(ax,ttl);
+image_num = image_num +1;
 
-
-plot(theta_2, C_info(5,:));
+% θ2 vs Direction of Acceleration of Point C
+plot(theta_2, C_info(5,:), '-b');
 title('Angle of Link 2 (θ2) vs. Acceleration of Point C (Rc)');
 grid('on');
 xlabel('Angle of Link 2 (°)');
 ylabel('Acceleration of Point C (cm/s^2)');
+ax = gca; % Save image
+ttl = sprintf('plots/plot_%d.png', image_num);
+exportgraphics(ax,ttl);
+image_num = image_num +1;
 
-plot(theta_2, C_info(6,:));
+% θ2 vs Direction of Direction of Acceleration
+plot(theta_2, C_info(6,:), '-m');
 title('Angle of Link 2 (θ2) vs. Direction of Acceleration for Point C');
 grid('on');
 xlabel('Angle of Link 2 (°)');
@@ -113,4 +146,8 @@ ylabel('Direction of Acceleration for Point C (°)');
 for i = 1:length(a_d_pts)
     xline(a_d_pts(i),'--')
 end
+ax = gca; % Save image
+ttl = sprintf('plots/plot_%d.png', image_num);
+exportgraphics(ax,ttl);
+image_num = image_num +1;
 

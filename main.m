@@ -25,7 +25,7 @@ r1 = 4;
 r2 = 5;
 r_bc = 20; 
 r4 = 12;
-R = [r1, r2, r4]; % list containing known link lengths
+R = [r1, r2, r_bc, r4]; % list containing known link lengths
 image_num = 1; % ignore, this is the nameing convention for saved plots
 
 theta_1 = 0;
@@ -34,6 +34,11 @@ theta_4 = 90;
 
 theta_2_dot = 40;
 theta_2_ddot = 0;
+
+link_diameter = 0.5;
+density = 2.7/15.432; % gr/cm^3 -> g/cm^3
+m4 = 5/15.432; % gr -> g
+phy_prop = [link_diameter, density, m4];
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Solving Kinematically (Chp. 5) %
@@ -150,4 +155,13 @@ ax = gca; % Save image
 ttl = sprintf('plots/plot_%d.png', image_num);
 exportgraphics(ax,ttl);
 image_num = image_num +1;
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Solving Kinetically (Chp. 5) %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%solution_vector = solve_kinetically(theta_2, theta_2_dot, theta_2_ddot, link3_info, R, phy_prop);
+
+
 

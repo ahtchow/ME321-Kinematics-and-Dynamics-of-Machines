@@ -5,7 +5,7 @@ function [link3_info] = solve_kinematically(theta_2, R, theta_2_dot, theta_2_ddo
 The following function will alnalyze the mechanical system kinematically 
 with respect to θ2. 
 
-Input: theta_2 = [0 ... 2π], R = [r1, r2, r4] , Theta = [theta_1, theta_4], theta_2_dot, theta_2_ddot
+Input: theta_2 = [0 ... 2π], R = [r1, r2, r_bc, r4] , Theta = [theta_1, theta_4], theta_2_dot, theta_2_ddot
 Output: link3_info = [r3, theta_3, r3_dot, theta_3_dot, r3_ddot,
 theta_3_ddot]
 
@@ -27,7 +27,7 @@ Dependant VariableS: θ3, R_3
 % Unpacking constants for code-reader
 r1 = R(1);
 r2 = R(2);
-r4 = R(3);
+r4 = R(4);
 
 r3 = sqrt( (r1^2) + (r2^2) + (r4^2) + (2*r1*r2*cosd(theta_2)) - (2*r2*r4*sind(theta_2)) );
 theta_3 = acosd( ((-r1 - (r2 * cosd(theta_2) ) )) ./ r3 );

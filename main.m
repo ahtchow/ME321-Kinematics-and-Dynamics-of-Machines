@@ -227,9 +227,27 @@ F14 = sqrt( (F14x).^2 + (F14y).^2 );
 
 % θ2 vs F12
 polarplot(deg2rad(theta_2), F12);
-title
-title('Angle of Link 2 (θ2) vs. Direction of Acceleration for Point C');
+title('Angle of Link 2 (θ2) vs. Newton Force of Link 1 on Link 2 (F12)', 'FontSize', 12);
+ax = gca; % Save image
+ttl = sprintf('plots/plot_%d.png', image_num);
+exportgraphics(ax,ttl);
+image_num = image_num +1;
 
+% θ2 vs F32
+polarplot(deg2rad(theta_2), F32);
+title('Angle of Link 2 (θ2) vs. Newton Force of Link 3 on Link 2 (F32)', 'FontSize', 12);
+ax = gca; % Save image
+ttl = sprintf('plots/plot_%d.png', image_num);
+exportgraphics(ax,ttl);
+image_num = image_num +1;
+
+% θ2 vs F14
+polarplot(deg2rad(theta_2), F14);
+title('Angle of Link 2 (θ2) vs. Newton Force of Link 1 on Link 4 (F14)', 'FontSize', 12);
+ax = gca; % Save image
+ttl = sprintf('plots/plot_%d.png', image_num);
+exportgraphics(ax,ttl);
+image_num = image_num +1;
 
 
 % Get shaking Force and Moment, input should be opposite force
@@ -238,7 +256,18 @@ Ms = get_shaking_moment(-F14x, -F14y, -M12, r1, r4);
 
 % Polar plot
 polarplot(deg2rad(theta_2), Fs);
-
-
+title('Angle of Link 2 (θ2) vs. Shaking Force in Newtons', 'FontSize', 12);
+ax = gca; % Save image
+ttl = sprintf('plots/plot_%d.png', image_num);
+exportgraphics(ax,ttl);
+image_num = image_num +1;
 
 plot(theta_2, Ms);
+title('Angle of Link 2 (θ2) vs. Shaking Moment on Base', 'FontSize', 12);
+ax = gca; % Save image
+grid('on')
+xlabel('Angle of Link 2 (°)', 'FontSize', 12);
+ylabel('Shaking Moment (N*m)', 'FontSize', 12);
+ttl = sprintf('plots/plot_%d.png', image_num);
+exportgraphics(ax,ttl);
+image_num = image_num +1;

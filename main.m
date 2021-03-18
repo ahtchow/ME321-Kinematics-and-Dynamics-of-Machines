@@ -250,6 +250,16 @@ exportgraphics(ax,ttl);
 image_num = image_num +1;
 
 
+% θ2 vs F43
+polarplot(deg2rad(theta_2), F43);
+title('Angle of Link 2 (θ2) vs. Newton Force of Link 4 on Link 3 (F43)', 'FontSize', 12);
+ax = gca; % Save image
+ttl = sprintf('plots/plot_%d.png', image_num);
+exportgraphics(ax,ttl);
+image_num = image_num +1;
+
+
+
 % Get shaking Force and Moment, input should be opposite force
 [Fs, Fs_direction] = get_shaking_force(-F12x, -F12y, -F14x, -F14y);
 Ms = get_shaking_moment(-F14x, -F14y, -M12, r1, r4);

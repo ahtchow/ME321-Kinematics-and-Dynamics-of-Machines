@@ -62,10 +62,10 @@ theta_3_ddot = link3_info(6,:);
 
 % θ2 vs θ3_dot
 plot(theta_2, theta_3_dot, '-b');
-title('Angle of Link 2 (θ2) vs. Angular Velocity of Link 3 (rad/s)');
+title('Angle of Link 2 (θ2) vs. Angular Velocity of Link 3 (rad/s)', 'FontSize', 12);
 grid('on');
-xlabel('Angle of Link 2 (°)');
-ylabel('Angular Velocity of Link 3 (rad/s)');
+xlabel('Angle of Link 2 (°)', 'FontSize', 12);
+ylabel('Angular Velocity of Link 3 (rad/s)', 'FontSize', 12);
 ax = gca; % Save image
 ttl = sprintf('plots/plot_%d.png', image_num);
 exportgraphics(ax,ttl);
@@ -73,10 +73,10 @@ image_num = image_num +1;
 
 % θ2 vs θ3_ddot
 plot(theta_2, theta_3_ddot, '-m');
-title('Angle of Link 2 (θ2) vs. Angular Acceletation of Link 3 (rad/s^s)');
+title('Angle of Link 2 (θ2) vs. Angular Acceleration of Link 3 (rad/s^2)', 'FontSize', 12);
 grid('on');
-xlabel('Angle of Link 2 (°)');
-ylabel('Angular Acceletation of Link 3 (rad/s^s)');
+xlabel('Angle of Link 2 (°)', 'FontSize', 12);
+ylabel('Angular Acceletation of Link 3 (rad/s^s)', 'FontSize', 12);
 ax = gca; % Save image
 ttl = sprintf('plots/plot_%d.png', image_num);
 exportgraphics(ax,ttl);
@@ -89,18 +89,18 @@ image_num = image_num +1;
 
 
 
-%%%%%%%%%%%%%%%%%%%%%
-%  Solving Point C  %
-%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Solving Point C (1. & 3.) %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 [C_info, v_d_pts, a_d_pts] = solve_C(r2, theta_2, theta_2_dot, theta_2_ddot, r_bc, link3_info);
 
 % θ2 vs Displacement of Point C
 plot(theta_2, C_info(1,:), '-b');
-title('Angle of Link 2 (θ2) vs. Displacement of Point C (Rc)');
+title('Angle of Link 2 (θ2) vs. Displacement of Point C (Rc)', 'FontSize', 12);
 grid('on');
-xlabel('Angle of Link 2 (°)');
-ylabel('Displacement of Point C (cm)');
+xlabel('Angle of Link 2 (°)', 'FontSize', 12);
+ylabel('Displacement of Point C (cm)', 'FontSize', 12);
 ax = gca; % Save image
 ttl = sprintf('plots/plot_%d.png', image_num);
 exportgraphics(ax,ttl);
@@ -108,10 +108,10 @@ image_num = image_num +1;
 
 % θ2 vs Direction Angle of Point C
 plot(theta_2, C_info(2,:), '-m');
-title('Angle of Link 2 (θ2) vs. Direction Angle of Point C (θc)');
+title('Angle of Link 2 (θ2) vs. Direction Angle of Point C (θc)', 'FontSize', 12);
 grid('on');
-xlabel('Angle of Link 2 (°)');
-ylabel('Displacement of Point C (°)');
+xlabel('Angle of Link 2 (°)', 'FontSize', 12);
+ylabel('Displacement of Point C (°)', 'FontSize', 12);
 ax = gca; % Save image
 ttl = sprintf('plots/plot_%d.png', image_num);
 exportgraphics(ax,ttl);
@@ -119,10 +119,10 @@ image_num = image_num +1;
 
 % θ2 vs Velocity of Point C
 plot(theta_2, C_info(3,:), '-b');
-title('Angle of Link 2 (θ2) vs. Velocity of Point C (Rc)');
+title('Angle of Link 2 (θ2) vs. Velocity of Point C (Rc)', 'FontSize', 12);
 grid('on');
-xlabel('Angle of Link 2 (°)');
-ylabel('Velocity of Point C (cm/s)');
+xlabel('Angle of Link 2 (°)', 'FontSize', 12);
+ylabel('Velocity of Point C (cm/s)', 'FontSize', 12);
 ax = gca; % Save image
 ttl = sprintf('plots/plot_%d.png', image_num);
 exportgraphics(ax,ttl);
@@ -130,10 +130,10 @@ image_num = image_num +1;
 
 % θ2 vs Direction of Velocity for Point C
 plot(theta_2, C_info(4,:), '-m');
-title('Angle of Link 2 (θ2) vs. Direction of Velocity for Point C');
+title('Angle of Link 2 (θ2) vs. Direction of Velocity for Point C', 'FontSize', 12);
 grid('on');
-xlabel('Angle of Link 2 (°)');
-ylabel('Direction of Velocity for Point C (°)');
+xlabel('Angle of Link 2 (°)', 'FontSize', 12);
+ylabel('Direction of Velocity for Point C (°)', 'FontSize', 12);
 for i = 1:length(v_d_pts)
     xline(v_d_pts(i),'--')
 end
@@ -144,10 +144,10 @@ image_num = image_num +1;
 
 % θ2 vs Acceleration of Point C
 plot(theta_2, C_info(5,:), '-b');
-title('Angle of Link 2 (θ2) vs. Acceleration of Point C (Rc)');
+title('Angle of Link 2 (θ2) vs. Acceleration of Point C (Rc)', 'FontSize', 12);
 grid('on');
-xlabel('Angle of Link 2 (°)');
-ylabel('Acceleration of Point C (cm/s^2)');
+xlabel('Angle of Link 2 (°)', 'FontSize', 12);
+ylabel('Acceleration of Point C (cm/s^2)', 'FontSize', 12);
 ax = gca; % Save image
 ttl = sprintf('plots/plot_%d.png', image_num);
 exportgraphics(ax,ttl);
@@ -155,10 +155,10 @@ image_num = image_num +1;
 
 % θ2 vs Direction of Acceleration for Point C
 plot(theta_2, C_info(6,:), '-m');
-title('Angle of Link 2 (θ2) vs. Direction of Acceleration for Point C');
+title('Angle of Link 2 (θ2) vs. Direction of Acceleration for Point C', 'FontSize', 12);
 grid('on');
-xlabel('Angle of Link 2 (°)');
-ylabel('Direction of Acceleration for Point C (°)');
+xlabel('Angle of Link 2 (°)', 'FontSize', 12);
+ylabel('Direction of Acceleration for Point C (°)', 'FontSize', 12);
 for i = 1:length(a_d_pts)
     xline(a_d_pts(i),'--')
 end
@@ -209,18 +209,36 @@ to_Newtons_Meters = to_Newtons * 1/100; % 1/100 to get to N*m
 
 F12x = X_info(1,:) * to_Newtons;
 F12y = X_info(2,:) * to_Newtons;
-Mo2 = X_info(3,:) * to_Newtons_Meters;
+M12 = X_info(3,:) * to_Newtons_Meters;
 F32x = X_info(4,:) * to_Newtons;
 F32y = X_info(5,:) * to_Newtons;
 F43 = X_info(6,:) * to_Newtons;
 F14x = X_info(7,:) * to_Newtons;
 F14y = X_info(8,:) * to_Newtons;
 
-% Get shaking Force and Moment,
-[Fs, Fs_direction] = get_shaking_force(-F12x, -F12y, -F14x, -F14y);
-Ms = get_shaking_moment(F14x, F14y, Mo2, r1, r4);
+% Magnitudes of Link Forces
+F12 = sqrt( (F12x).^2 + (F12y).^2 );
+F32 = sqrt( (F32x).^2 + (F32y).^2 );
+F14 = sqrt( (F14x).^2 + (F14y).^2 );
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% POLAR PLOTS of FORCES ON LINK (4.) %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% θ2 vs F12
+polarplot(deg2rad(theta_2), F12);
+title
+title('Angle of Link 2 (θ2) vs. Direction of Acceleration for Point C');
+
+
+
+% Get shaking Force and Moment, input should be opposite force
+[Fs, Fs_direction] = get_shaking_force(-F12x, -F12y, -F14x, -F14y);
+Ms = get_shaking_moment(-F14x, -F14y, -M12, r1, r4);
 
 % Polar plot
 polarplot(deg2rad(theta_2), Fs);
-polarplot(deg2rad(theta_2), Ms);
+
+
+
+plot(theta_2, Ms);

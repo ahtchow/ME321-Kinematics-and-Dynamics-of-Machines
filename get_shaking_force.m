@@ -1,7 +1,7 @@
 function [Fs,Fs_angle] = get_shaking_force(F21x,F21y, F41x, F41y)
 
-Fsx = Fo22x + F41x;
-Fsy = Fo22y + F41y;
+Fsx = F21x + F41x;
+Fsy = F21y + F41y;
 
 % Magnitude
 Fs = sqrt( (Fsx).^2 + (Fsy).^2 );

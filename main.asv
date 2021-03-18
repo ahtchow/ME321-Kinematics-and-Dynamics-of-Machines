@@ -12,7 +12,7 @@ Dependant VariableS: θ3, R3
 1. Displacement of point C
 2. angular velocities and accelerations of all links,
 3. Linear velocities and accelerations of point C,
-4. Polar plots ofthe forces at all joints and the shaking force,
+4. Polar plots of the forces at all joints and the shaking force,
 5. Shaking moment applied from the mechanism to the base
 
 %}
@@ -25,7 +25,7 @@ r1 = 4;
 r2 = 5;
 r_bc = 20; 
 r4 = 12;
-R = [r1, r2, r4]; % list containing known link lengths
+R = [r1, r2, r_bc, r4]; % list containing known link lengths
 image_num = 1; % ignore, this is the nameing convention for saved plots
 
 theta_1 = 0;
@@ -36,7 +36,14 @@ theta_2_dot = 40;
 theta_2_ddot = 0;
 
 link_diameter = 0.5;
-density = 2.7/15.432; % gr/cm^3 -> g/cm^3
+density = 2.7; % g/cm^3
+m4 = 5; % g
+phy_prop = [link_diameter, density, m4];
+
+
+
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Solving Kinematically (Chp. 5) %
@@ -74,6 +81,13 @@ ax = gca; % Save image
 ttl = sprintf('plots/plot_%d.png', image_num);
 exportgraphics(ax,ttl);
 image_num = image_num +1;
+
+
+
+
+
+
+
 
 %%%%%%%%%%%%%%%%%%%%%
 %  Solving Point C  %
@@ -120,7 +134,6 @@ title('Angle of Link 2 (θ2) vs. Direction of Velocity for Point C');
 grid('on');
 xlabel('Angle of Link 2 (°)');
 ylabel('Direction of Velocity for Point C (°)');
-plot(theta_2, C_info(4,:));
 for i = 1:length(v_d_pts)
     xline(v_d_pts(i),'--')
 end
@@ -129,7 +142,7 @@ ttl = sprintf('plots/plot_%d.png', image_num);
 exportgraphics(ax,ttl);
 image_num = image_num +1;
 
-% θ2 vs Direction of Acceleration of Point C
+% θ2 vs Acceleration of Point C
 plot(theta_2, C_info(5,:), '-b');
 title('Angle of Link 2 (θ2) vs. Acceleration of Point C (Rc)');
 grid('on');
@@ -140,7 +153,7 @@ ttl = sprintf('plots/plot_%d.png', image_num);
 exportgraphics(ax,ttl);
 image_num = image_num +1;
 
-% θ2 vs Direction of Direction of Acceleration
+% θ2 vs Direction of Acceleration for Point C
 plot(theta_2, C_info(6,:), '-m');
 title('Angle of Link 2 (θ2) vs. Direction of Acceleration for Point C');
 grid('on');
@@ -155,11 +168,54 @@ exportgraphics(ax,ttl);
 image_num = image_num +1;
 
 
+
+
+
+
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Solving Kinetically (Chp. 5) %
+% Solving Kinetically (Chp. 6) %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 solution_vector = solve_kinetically(theta_2, theta_2_dot, theta_2_ddot, link3_info, R, phy_prop);
+
+% Theta_d is the angle of F14 and is perpendicular to theta_3
+theta_d = mod((90 + theta_3), 360);
+
+r3 = link3_info(1, :); % Using variable r3 vaues
+X_info = zeros(size(solution_vector)); % This is where we will store solutions
+
+
+% Solving Linear Equation
+for i = 1:length(solution_vector)
+   
+  % Get A matrix function
+  A = get_A_matrix(theta_2(i), theta_d(i), r3(i), theta_3(i), R); 
+  
+  % Solve linear eqaution
+  X = linsolve(A, solution_vector(:,i));
+  
+  % Store solutions
+  X_info(:,i) = X;
+   
+end
+
+
+% Convert to N for Forces and N*m for Moments Equations
+
+to_Newtons = 1/100 * 1/1000; % 1/100 to get to m , 1/1000 to get to kg
+to_Newtons_Meters = to_Newtons * 1/100; % 1/100 to get to N*m
+
+F2o2x = X_info(1,:) * to_Newtons;
+F2o2y = X_info(2,:) * to_Newtons;
+Mo2 = X_info(3,:) * to_Newtons_Meters;
+F32x = X_info(4,:) * to_Newtons;
+F32y = X_info(5,:) * to_Newtons;
+F43 = X_info(6,:) * to_Newtons_Meters;
+F14x = X_info(7,:) * to_Newtons;
+F14y = X_info(8,:) * to_Newtons;
+
 
 
 

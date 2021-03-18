@@ -1,0 +1,5 @@
+function Ms = get_shaking_moment(F14x, F14y, Mo2, r1, r4)
+
+Ms = Mo2 ;
+
+end

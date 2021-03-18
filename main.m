@@ -12,7 +12,7 @@ Dependant VariableS: θ3, R3
 1. Displacement of point C
 2. angular velocities and accelerations of all links,
 3. Linear velocities and accelerations of point C,
-4. Polar plots ofthe forces at all joints and the shaking force,
+4. Polar plots of the forces at all joints and the shaking force,
 5. Shaking moment applied from the mechanism to the base
 
 %}
@@ -36,9 +36,14 @@ theta_2_dot = 40;
 theta_2_ddot = 0;
 
 link_diameter = 0.5;
-density = 2.7/15.432; % gr/cm^3 -> g/cm^3
-m4 = 5/15.432; % gr -> g
+density = 2.7; % g/cm^3
+m4 = 5; % g
 phy_prop = [link_diameter, density, m4];
+
+
+
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Solving Kinematically (Chp. 5) %
@@ -76,6 +81,13 @@ ax = gca; % Save image
 ttl = sprintf('plots/plot_%d.png', image_num);
 exportgraphics(ax,ttl);
 image_num = image_num +1;
+
+
+
+
+
+
+
 
 %%%%%%%%%%%%%%%%%%%%%
 %  Solving Point C  %
@@ -156,11 +168,59 @@ exportgraphics(ax,ttl);
 image_num = image_num +1;
 
 
+
+
+
+
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Solving Kinetically (Chp. 5) %
+% Solving Kinetically (Chp. 6) %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%solution_vector = solve_kinetically(theta_2, theta_2_dot, theta_2_ddot, link3_info, R, phy_prop);
+solution_vector = solve_kinetically(theta_2, theta_2_dot, theta_2_ddot, link3_info, R, phy_prop);
+
+% Theta_d is the angle of F14 and is perpendicular to theta_3
+theta_d = mod((90 + theta_3), 360);
+
+r3 = link3_info(1, :); % Using variable r3 vaues
+X_info = zeros(size(solution_vector)); % This is where we will store solutions
 
 
+% Solving Linear Equation
+for i = 1:length(solution_vector)
+   
+  % Get A matrix function
+  A = get_A_matrix(theta_2(i), theta_d(i), r3(i), theta_3(i), R); 
+  
+  % Solve linear eqaution
+  X = linsolve(A, solution_vector(:,i));
+  
+  % Store solutions
+  X_info(:,i) = X;
+   
+end
 
+
+% Convert to N for Forces and N*m for Moments Equations
+
+to_Newtons = 1/100 * 1/1000; % 1/100 to get to m , 1/1000 to get to kg
+to_Newtons_Meters = to_Newtons * 1/100; % 1/100 to get to N*m
+
+F12x = X_info(1,:) * to_Newtons;
+F12y = X_info(2,:) * to_Newtons;
+Mo2 = X_info(3,:) * to_Newtons_Meters;
+F32x = X_info(4,:) * to_Newtons;
+F32y = X_info(5,:) * to_Newtons;
+F43 = X_info(6,:) * to_Newtons;
+F14x = X_info(7,:) * to_Newtons;
+F14y = X_info(8,:) * to_Newtons;
+
+% Get shaking Force and Moment,
+[Fs, Fs_direction] = get_shaking_force(-F12x, -F12y, -F14x, -F14y);
+Ms = get_shaking_moment(F14x, F14y, Mo2, r1, r4);
+
+
+% Polar plot
+polarplot(deg2rad(theta_2), Fs);
+polarplot(deg2rad(theta_2), Ms);

@@ -1,0 +1,6 @@
+function Fs = get_shaking_force(F2o2x,F2o2y, F14x, F14y) %What goes inside the brackets is an example. Fill it up as desired.
+% 
+
+Fs = 
+
+end

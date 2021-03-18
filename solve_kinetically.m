@@ -14,15 +14,15 @@ r2 = R(2);
 rbc = R(3);
 r3 = link3_info(1, :);
 
-m2 = face_area * r2;
-mbc = face_area * rbc;
+m2 = face_area * r2 * density;
+mbc = face_area * rbc * density;
 m4 = phy_prop(3);
 
 % Calculate Moment of Inertia of each link
-Io2 = (1/3) * m2 * r2.^2;
-Ig3 = (1/12) * mbc * r3.^2;
+Io2 = (1/3) * m2 * r2^2;
+Ig3 = (1/12) * mbc * rbc^2;
 
-% Calculate Midpoint of each link
+% Calculate Midpoint Length of each link
 b2 = r2/2;
 b3 = rbc/2;
 
@@ -35,8 +35,8 @@ theta_3_ddot = link3_info(6,:);
 % Solving Link 2 %
 %%%%%%%%%%%%%%%%%%
 
-Ag2x = 
-Ag2y = 
+Ag2x = (-b2 * theta_2_ddot * sind(theta_2)) + ( -b2 * (theta_2_dot)^2 * cosd(theta_2));
+Ag2y = ( b2 * theta_2_ddot * cosd(theta_2)) + ( -b2 * (theta_2_dot)^2 * sind(theta_2));
     
 M2Ag2x = m2 * Ag2x;
 M2Ag2y = m2 * Ag2y;
@@ -56,8 +56,18 @@ Ag3y = (r2 * theta_2_ddot * cosd(theta_2)) + (-r2 * (theta_2_dot)^2 * sind(theta
 MbcAg3x = mbc * Ag3x;
 MbcAg3y = mbc * Ag3y;
 
-Ig3_theta_3_ddot = Ig3 * theta_3_ddot; 
+Ig3_theta_3_ddot = (Ig3 * theta_3_ddot); 
 
+%%%%%%%%%%%%%%%%%%
+% Solving Link 4 %
+%%%%%%%%%%%%%%%%%%
 
+% Link Four is assumed to be not accelerating
+
+M4Ag4x = zeros(size(theta_2));
+M4Ag4y = zeros(size(theta_2));
+
+solution_vector = [M2Ag2x; M2Ag2y; Io2_theta_2_ddot; MbcAg3x; ...
+                    MbcAg3y; Ig3_theta_3_ddot; M4Ag4x; M4Ag4y];
 end
 

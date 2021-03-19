@@ -1,5 +1,15 @@
 function A = get_A_matrix(theta_2, theta_d, r3, theta_3, R)
 
+%{
+
+The following function will determine the coefficients matrix A for the system of linear equations. 
+
+Input: theta_2 = [0 ... 2π], theta_d, r3, theta_3, R = = [r1, r2, r_bc, r4]
+
+Output: A 
+
+%}
+
 % Unpack Lengths
 r2 = R(2);
 rbc = R(3);

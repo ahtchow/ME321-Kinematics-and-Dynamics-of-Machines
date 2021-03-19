@@ -1,5 +1,15 @@
 function [Fs,Fs_angle] = get_shaking_force(F21x,F21y, F41x, F41y)
 
+%{
+
+The following function will calculate the shaking force with respect to the wall. 
+
+Input: F21x, F21y, F41x, F41y
+
+Output: Fs, Fs_angle
+
+%}
+
 Fsx = F21x + F41x;
 Fsy = F21y + F41y;
 

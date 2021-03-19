@@ -2,11 +2,12 @@ function [C_info, V_d_pts, A_d_pts] = solve_C(r2, theta_2, theta_2_dot, theta_2_
 
 %{
 
-The following function solve displacement, linear velocity and acceleration for point C. 
+The following function will solve displacement, linear velocity and acceleration for point C. 
 
 Input: theta_2 = [0 ... 2π], R = [r1, r2, r4] , theta_2_dot, theta_2_ddot, rbc
        link3_info = [r3, theta_3, r3_dot, theta_3_dot, r3_ddot, theta_3_ddot]
-Output: C_info = [c_displacement, c_velocity, c_acceleration],
+
+Output: C_info = [c_displacement, c_velocity, c_acceleration], V_d_pts, A_d_pts
 
 See derivation...
 
@@ -56,7 +57,7 @@ A_angle = zeros(size(theta_2));
 Vx = -Vx;
 Ax =  -Ax;
 
-% Discontinuity points - e.g going from 0 degrees to 360 degrees
+% Discontinuity points - e.g going from 0 degrees to 360 degrees (see plots)
 tol = 50; % identifier for discontinuity
 V_d_pts = []; 
 A_d_pts = [];

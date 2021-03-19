@@ -17,6 +17,7 @@ Dependant VariableS: θ3, R3
 
 %}
 
+
 %%%%%%%%%%%%%
 % Constants %
 %%%%%%%%%%%%%
@@ -41,10 +42,6 @@ m4 = 5; % g
 phy_prop = [link_diameter, density, m4];
 
 
-
-
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Solving Kinematically (Chp. 5) %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -52,7 +49,6 @@ phy_prop = [link_diameter, density, m4];
 link3_info = solve_kinematically(theta_2, R, theta_2_dot, theta_2_ddot);
 
 % Unpacking link3_info, a list containing [r3 , θ3, r3_dot, theta_3_dot, r3_ddot, theta_3_ddot]
-
 r3 = link3_info(1,:);
 theta_3 = link3_info(2,:);
 r3_dot = link3_info(3,:);
@@ -81,13 +77,6 @@ ax = gca; % Save image
 ttl = sprintf('plots/plot_%d.png', image_num);
 exportgraphics(ax,ttl);
 image_num = image_num +1;
-
-
-
-
-
-
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %  Solving Point C (1. & 3.) %
@@ -168,12 +157,6 @@ exportgraphics(ax,ttl);
 image_num = image_num +1;
 
 
-
-
-
-
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Solving Kinetically (Chp. 6) %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -221,6 +204,7 @@ F12 = sqrt( (F12x).^2 + (F12y).^2 );
 F32 = sqrt( (F32x).^2 + (F32y).^2 );
 F14 = sqrt( (F14x).^2 + (F14y).^2 );
 
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % POLAR PLOTS of FORCES ON LINK (4.) %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -249,7 +233,6 @@ ttl = sprintf('plots/plot_%d.png', image_num);
 exportgraphics(ax,ttl);
 image_num = image_num +1;
 
-
 % θ2 vs F43
 polarplot(deg2rad(theta_2), F43);
 title('Angle of Link 2 (θ2) vs. Newton Force of Link 4 on Link 3 (F43)', 'FontSize', 12);
@@ -258,7 +241,9 @@ ttl = sprintf('plots/plot_%d.png', image_num);
 exportgraphics(ax,ttl);
 image_num = image_num +1;
 
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Shaking Forces and Moments %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Get shaking Force and Moment, input should be opposite force
 [Fs, Fs_direction] = get_shaking_force(-F12x, -F12y, -F14x, -F14y);

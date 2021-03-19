@@ -1,12 +1,20 @@
 function [solution_vector] = solve_kinetically(theta_2, theta_2_dot, theta_2_ddot, link3_info, R, phy_prop)
 
+%{
 
-% SOLVE_KINETICALLY Summary of this function goes here
-%   Detailed explanation goes here
+The following function will analyze the mechanical system kinetically 
+with respect to θ2. Solve for summation of forces and moments for the RHS
+of matrix.
 
+Input: theta_2 = [0 ... 2π], theta_2_dot, theta_2_ddot,
+                 link3_info = [r3, theta_3, r3_dot, theta_3_dot, r3_ddot, theta_3_ddot],
+                 R = [r1, r2, r_bc, r4], phy_prop = [link_diameter, density, m4]
 
-% Calculate mass of each link
+Output: solution_vector = [M2Ag2x; M2Ag2y; Io2_theta_2_ddot; MbcAg3x; ...
+                           MbcAg3y; Ig3_theta_3_ddot; M4Ag4x; M4Ag4y];
+%}
 
+% Calculate mass of each link using physical properties
 diameter = phy_prop(1);
 density = phy_prop(2);
 face_area = pi * (diameter/2)^2;
@@ -16,7 +24,6 @@ r3 = link3_info(1, :);
 
 m2 = face_area * r2 * density;
 mbc = face_area * rbc * density;
-m4 = phy_prop(3);
 
 % Calculate Moment of Inertia of each link
 Io2 = (1/3) * m2 * r2^2;
